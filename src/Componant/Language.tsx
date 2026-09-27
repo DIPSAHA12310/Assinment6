@@ -8,7 +8,7 @@ interface languageProps {
 }
 
 const Language = ({ languagePromies }: languageProps) => {
-    console.log(languagePromies)
+
     const language = use(languagePromies)
 
     const [card, setcard] = useState<Ilanguage[]>([])
@@ -25,6 +25,7 @@ const Language = ({ languagePromies }: languageProps) => {
     }
 
     const handleRemove = (id: string) => {
+
         const removedItem = card.find((item) => item.id === id)
 
         setcard(card.filter((item) => item.id !== id))
@@ -35,30 +36,50 @@ const Language = ({ languagePromies }: languageProps) => {
     }
 
     const handleRemoveAll = () => {
+
         setcard([])
+
         toast.info("All technologies removed!")
     }
 
     return (
-        <div>
-            <div className=''>
-                <h3 className='text-black font-bold text-3xl'>
-                    Explore the <span className='text-fuchsia-600'>Tecnologies</span>
+        <div className="container mx-auto px-4 md:px-8 py-12">
+
+            {/* Heading */}
+
+            <div className="mb-8">
+
+                <h3 className="text-black font-bold text-3xl">
+                    Explore the{' '}
+                    <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-violet-600 bg-clip-text text-transparent">
+                        Technologies
+                    </span>
                 </h3>
 
-                <h3>
-                    Pick one technology per category to build your idel stack
-                </h3>
+                <p className="mt-2">
+                    Pick one technology per category to build your ideal stack
+                </p>
+
             </div>
 
-            <div className='flex justify-between gap-4'>
 
-                <div className="grid grid-cols-3 gap-6 justify-between">
+            {/* Cards + Stack */}
+
+            <div className="flex flex-col lg:flex-row gap-8">
+
+                {/* Technology Cards */}
+
+                <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     {
                         language.map((langu) => {
 
+                            const isAdded = card.some(
+                                (item) => item.id === langu.id
+                            )
+
                             return (
+
                                 <div
                                     key={langu.id}
                                     className="card bg-base-100 shadow-sm"
@@ -66,52 +87,54 @@ const Language = ({ languagePromies }: languageProps) => {
 
                                     <div className="card-body">
 
-                                        <div className='flex justify-between'>
+                                        {/* Icon + Badge */}
 
-                                            <div className='w-10 h-10'>
+                                        <div className="flex justify-between items-center">
+
+                                            <div className="w-10 h-10">
+
                                                 <img
                                                     src={langu.icon}
-                                                    alt=""
+                                                    alt={langu.name}
+                                                    className="w-full h-full object-contain"
                                                 />
+
                                             </div>
 
-                                            <div>
-                                                <div className="badge badge-neutral badge-outline">
-                                                    {langu.badge}
-                                                </div>
+                                            <div className="badge badge-neutral badge-outline">
+                                                {langu.badge}
                                             </div>
 
                                         </div>
 
-                                        <div className="flex justify-between">
 
-                                            <h2 className="text-3xl font-bold">
-                                                {langu.name}
-                                            </h2>
+                                        {/* Name */}
 
-                                        </div>
+                                        <h2 className="text-2xl font-bold mt-3">
+                                            {langu.name}
+                                        </h2>
 
-                                        <h4>
+
+                                        {/* Description */}
+
+                                        <p className="text-sm mt-2">
                                             {langu.description}
-                                        </h4>
+                                        </p>
 
-                                        <div className='pt-8'>
 
-                                            <button
-                                                type="submit"
-                                                className="btn"
-                                            >
+                                        {/* Category + Difficulty + Rating */}
+
+                                        <div className="flex flex-wrap items-center gap-2 mt-6">
+
+                                            <span className="badge badge-outline">
                                                 {langu.category}
-                                            </button>
+                                            </span>
 
-                                            <button
-                                                type="submit"
-                                                className="btn"
-                                            >
+                                            <span className="badge badge-outline">
                                                 {langu.difficulty}
-                                            </button>
+                                            </span>
 
-                                            <span className="text-yellow-400 pl-6">
+                                            <span className="text-yellow-400">
                                                 ★
                                             </span>
 
@@ -121,27 +144,22 @@ const Language = ({ languagePromies }: languageProps) => {
 
                                         </div>
 
-                                        <ul className="mt-6 flex flex-col gap-2 text-xs"></ul>
+
+                                        {/* Add Button */}
 
                                         <div className="mt-6">
 
                                             <button
                                                 onClick={() => handleClick(langu)}
-                                                disabled={card.some(
-                                                    (item) => item.id === langu.id
-                                                )}
+                                                disabled={isAdded}
                                                 className={`btn btn-block ${
-                                                    card.some(
-                                                        (item) => item.id === langu.id
-                                                    )
+                                                    isAdded
                                                         ? "bg-gray-300 text-black"
                                                         : "bg-black text-white"
                                                 }`}
                                             >
                                                 {
-                                                    card.some(
-                                                        (item) => item.id === langu.id
-                                                    )
+                                                    isAdded
                                                         ? "✓ Added to Stack"
                                                         : "Add to Stack"
                                                 }
@@ -152,51 +170,52 @@ const Language = ({ languagePromies }: languageProps) => {
                                     </div>
 
                                 </div>
+
                             )
+
                         })
+
                     }
 
                 </div>
 
 
-                <div>
+                {/* Your Stack */}
 
-                    <div className="card w-96 bg-base-100 shadow-sm">
+                <div className="w-full lg:w-96">
+
+                    <div className="card bg-base-100 shadow-sm">
 
                         <div className="card-body">
 
-                            <div className="flex justify-between">
+                            <h2 className="text-2xl font-bold">
+                                Your Stack
+                            </h2>
 
-                                <h2 className="text-3xl font-bold">
-                                    Your Stack
-                                </h2>
+                            <p className="text-sm">
+                                {card.length} Technology Selected
+                            </p>
 
-                            </div>
 
-                            <div className="w-64">
+                            {
+                                card.length === 0 ? (
 
-                                {
-                                    card.length === 0 ? (
+                                    <p className="mt-4">
+                                        No technologies selected yet
+                                    </p>
 
-                                        <h2>
-                                            No technologies selected yet
-                                        </h2>
+                                ) : (
 
-                                    ) : (
+                                    <>
 
-                                        <>
-
-                                            <h2>
-                                                {card.length} selected yet
-                                            </h2>
-
+                                        <div className="mt-4 flex flex-col gap-3">
 
                                             {
                                                 card.map((langu) => (
 
                                                     <div
                                                         key={langu.id}
-                                                        className="card bg-base-100 shadow-sm mb-3 p-3"
+                                                        className="card bg-base-100 shadow-sm p-3"
                                                     >
 
                                                         <div className="flex items-center justify-between">
@@ -206,7 +225,7 @@ const Language = ({ languagePromies }: languageProps) => {
                                                                 <img
                                                                     src={langu.icon}
                                                                     alt={langu.name}
-                                                                    className="w-10 h-10"
+                                                                    className="w-10 h-10 object-contain"
                                                                 />
 
                                                                 <div>
@@ -240,20 +259,20 @@ const Language = ({ languagePromies }: languageProps) => {
                                                 ))
                                             }
 
+                                        </div>
 
-                                            <button
-                                                onClick={handleRemoveAll}
-                                                className="btn btn-error mt-4 mx-auto block"
-                                            >
-                                                Remove All
-                                            </button>
 
-                                        </>
+                                        <button
+                                            onClick={handleRemoveAll}
+                                            className="btn btn-error mt-4 w-full"
+                                        >
+                                            Remove All
+                                        </button>
 
-                                    )
-                                }
+                                    </>
 
-                            </div>
+                                )
+                            }
 
                         </div>
 
@@ -267,7 +286,7 @@ const Language = ({ languagePromies }: languageProps) => {
             <ToastContainer />
 
         </div>
-    );
-};
+    )
+}
 
-export default Language;
+export default Language
