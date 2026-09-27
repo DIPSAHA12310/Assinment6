@@ -55,7 +55,7 @@ Conditional rendering means displaying different UI elements depending on a cond
 
 ## 7. How do you pass data from a parent component to a child component? How can a child component communicate with its parent?
 
-A parent component can pass data to a child component using props. A child component can communicate with its parent by receiving a callback function through props and calling that function when an event occurs.
+A parent component can pass data to a child component using props. A child component can communicate with its parent by receiving a callback function through props and calling that fun when an event occurs.
 
 ---
 
